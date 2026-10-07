@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Hsinchu GTA v0.1 — Playable Open World</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <canvas id="game"></canvas>
+
+  <div id="loading">
+    <div class="loading-card">
+      <div class="logo">HSINCHU <span>GTA</span></div>
+      <div class="version">v0.1 — PLAYABLE OPEN WORLD</div>
+      <div class="progress"><i id="progress"></i></div>
+      <div id="loadingText">Initializing world...</div>
+    </div>
+  </div>
+
+  <div id="hud">
+    <div class="topbar">
+      <div class="location" id="location">東門城</div>
+      <div class="coords" id="coords">24.803950, 120.971500</div>
+    </div>
+
+    <div class="speedometer">
+      <div class="speed" id="speed">0</div>
+      <div class="unit">KM/H</div>
+      <div class="rpm-wrap"><div class="rpm-label">RPM</div><div class="rpm"><i id="rpm"></i></div></div>
+      <div class="heading" id="heading">N 000°</div>
+    </div>
+
+    <div class="minimap">
+      <canvas id="minimap" width="220" height="220"></canvas>
+      <div class="player-dot"></div>
+      <div class="map-label" id="mapLabel">新竹市</div>
+    </div>
+
+    <div class="help">
+      <b>WASD</b> / 方向鍵 駕駛　<b>SPACE</b> 手煞車　<b>R</b> 重置車輛　<b>V</b> 鏡頭
+    </div>
+
+    <div id="banner" class="banner"></div>
+    <div id="mobileControls" class="mobile-controls">
+      <button data-key="w">▲</button>
+      <div><button data-key="a">◀</button><button data-key="s">▼</button><button data-key="d">▶</button></div>
+      <button data-key=" ">HANDBRAKE</button>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
