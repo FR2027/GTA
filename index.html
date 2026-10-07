@@ -59,6 +59,24 @@
     </div>
   </div>
 
-  <script type="module" src="./src/main.js"></script>
+  <!-- 除錯版載入邏輯 -->
+  <script type="module">
+    window.addEventListener('error', (e) => {
+      const el = document.getElementById('loadingText');
+      if (el) el.innerHTML = `<span style="color:#ff5555;font-weight:bold;">ERROR: ${e.message}</span>`;
+    });
+
+    window.addEventListener('unhandledrejection', (e) => {
+      const el = document.getElementById('loadingText');
+      if (el) el.innerHTML = `<span style="color:#ff5555;font-weight:bold;">REJECTION: ${e.reason?.message || e.reason}</span>`;
+    });
+
+    try {
+      await import('./src/main.js');
+    } catch (err) {
+      const el = document.getElementById('loadingText');
+      if (el) el.innerHTML = `<span style="color:#ff5555;font-weight:bold;">LOAD FAILED: ${err.message || err}</span>`;
+    }
+  </script>
 </body>
 </html>
