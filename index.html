@@ -78,5 +78,26 @@
       if (el) el.innerHTML = `<span style="color:#ff5555;font-weight:bold;">LOAD FAILED: ${err.message || err}</span>`;
     }
   </script>
+    <script type="module">
+    const text = document.getElementById("loadingText");
+    const show = (msg) => { if(text) text.innerHTML = `<span style="color:#ff5555;font-weight:bold;">${msg}</span>`; };
+
+    async function check() {
+      try {
+        show("測試 Config.js..."); await import("./src/core/Config.js");
+        show("測試 Input.js..."); await import("./src/input/Input.js");
+        show("測試 HUD.js..."); await import("./src/ui/HUD.js");
+        show("測試 EngineAudio.js..."); await import("./src/audio/EngineAudio.js");
+        show("測試 Vehicle.js..."); await import("./src/vehicle/Vehicle.js");
+        show("測試 World.js..."); await import("./src/world/World.js");
+        show("測試 Game.js..."); await import("./src/core/Game.js");
+        show("測試 main.js..."); await import("./src/main.js");
+      } catch (err) {
+        show(`載入失敗的檔案：${err.message || err}`);
+      }
+    }
+    check();
+  </script>
+
 </body>
 </html>
