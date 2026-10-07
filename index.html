@@ -59,45 +59,54 @@
     </div>
   </div>
 
-  <!-- 除錯版載入邏輯 -->
+  <!-- 整合版除錯與單元測試腳本 -->
   <script type="module">
-    window.addEventListener('error', (e) => {
-      const el = document.getElementById('loadingText');
-      if (el) el.innerHTML = `<span style="color:#ff5555;font-weight:bold;">ERROR: ${e.message}</span>`;
-    });
+    const logEl = document.getElementById('loadingText');
+    
+    const showError = (type, msg) => {
+      if (logEl) {
+        logEl.innerHTML = `<span style="color:#ff5555;font-weight:bold;word-break:break-all;">[${type}] ${msg}</span>`;
+      }
+    };
 
-    window.addEventListener('unhandledrejection', (e) => {
-      const el = document.getElementById('loadingText');
-      if (el) el.innerHTML = `<span style="color:#ff5555;font-weight:bold;">REJECTION: ${e.reason?.message || e.reason}</span>`;
-    });
+    // 全局未捕獲例外攔截
+    window.addEventListener('error', (e) => showError('全局語法錯誤', e.message));
+    window.addEventListener('unhandledrejection', (e) => showError('異步拒絕', e.reason?.message || e.reason));
 
-    try {
-      await import('./src/main.js');
-    } catch (err) {
-      const el = document.getElementById('loadingText');
-      if (el) el.innerHTML = `<span style="color:#ff5555;font-weight:bold;">LOAD FAILED: ${err.message || err}</span>`;
-    }
-  </script>
-    <script type="module">
-    const text = document.getElementById("loadingText");
-    const show = (msg) => { if(text) text.innerHTML = `<span style="color:#ff5555;font-weight:bold;">${msg}</span>`; };
-
-    async function check() {
+    async function debugAndLaunch() {
       try {
-        show("測試 Config.js..."); await import("./src/core/Config.js");
-        show("測試 Input.js..."); await import("./src/input/Input.js");
-        show("測試 HUD.js..."); await import("./src/ui/HUD.js");
-        show("測試 EngineAudio.js..."); await import("./src/audio/EngineAudio.js");
-        show("測試 Vehicle.js..."); await import("./src/vehicle/Vehicle.js");
-        show("測試 World.js..."); await import("./src/world/World.js");
-        show("測試 Game.js..."); await import("./src/core/Game.js");
-        show("測試 main.js..."); await import("./src/main.js");
+        showError('診斷中', '1/8 測試 Config.js...');
+        await import('./src/core/Config.js');
+
+        showError('診斷中', '2/8 測試 Input.js...');
+        await import('./src/input/Input.js');
+
+        showError('診斷中', '3/8 測試 HUD.js...');
+        await import('./src/ui/HUD.js');
+
+        showError('診斷中', '4/8 測試 EngineAudio.js...');
+        await import('./src/audio/EngineAudio.js');
+
+        showError('診斷中', '5/8 測試 Vehicle.js...');
+        await import('./src/vehicle/Vehicle.js');
+
+        showError('診斷中', '6/8 測試 World.js...');
+        await import('./src/world/World.js');
+
+        showError('診斷中', '7/8 測試 Game.js...');
+        await import('./src/core/Game.js');
+
+        showError('診斷中', '8/8 測試 main.js...');
+        await import('./src/main.js');
+
+        // 若無任何錯誤，清空除錯文字恢復正常顯示
+        if (logEl) logEl.innerHTML = '載入完成，準備進入遊戲...';
       } catch (err) {
-        show(`載入失敗的檔案：${err.message || err}`);
+        showError('模組載入失敗', `${err.name || 'Error'}: ${err.message || err}`);
       }
     }
-    check();
-  </script>
 
+    debugAndLaunch();
+  </script>
 </body>
 </html>
