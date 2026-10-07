@@ -1,3 +1,5 @@
+import { Game } from "./core/Game.js";
+
 const loading = document.getElementById("loading");
 const progress = document.getElementById("progress");
 const text = document.getElementById("loadingText");
@@ -12,7 +14,6 @@ window.addEventListener("unhandledrejection", (e) => showError(`Promise Rejected
 async function start() {
   try {
     text.textContent = "Loading Game engine...";
-    const { Game } = await import("./core/Game.js");
     
     const game = new Game(document.getElementById("game"));
     
