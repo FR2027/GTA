@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
   <title>Hsinchu GTA v0.1 — Playable Open World</title>
   <link rel="stylesheet" href="./style.css" />
+
+  <!-- 解決瀏覽器無法直接 import 'three' 模組的問題 -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
 </head>
 <body>
   <canvas id="game"></canvas>
